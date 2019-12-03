@@ -9,15 +9,17 @@ just serve up static files with a configured root path.
 
 ### Source
 
-```#!bash
-$ go install github.com/prologic/static/...
+With a valid [Go](https://golang.org) environment:
+
+```#!sh
+$ go get github.com/prologic/static
 ```
 
 ## Usage
 
 Run static:
 
-```#!bash
+```#!sh
 $ static
 ```
 
