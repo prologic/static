@@ -1,4 +1,4 @@
-.PHONY: dev build test release clean
+.PHONY: dev build install test release clean
 
 all: dev
 
@@ -10,6 +10,9 @@ build: clean
 		-tags "netgo static_build" -installsuffix netgo \
 		-ldflags "-w -X $(shell go list).Version=$(VERSION) -X $(shell go list).Commit=$(COMMIT)" \
 		.
+
+install: build
+	@go install
 
 test:
 	@go test ./...
