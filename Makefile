@@ -1,16 +1,21 @@
-.PHONY: dev build clean
+.PHONY: dev build test release clean
 
 all: dev
 
 dev: build
-	./static
+	@./static -v
 
 build: clean
-	go get ./...
-	go build .
+	@go build \
+		-tags "netgo static_build" -installsuffix netgo \
+		-ldflags "-w -X $(shell go list).Version=$(VERSION) -X $(shell go list).Commit=$(COMMIT)" \
+		.
 
 test:
-	go test ./...
+	@go test ./...
+
+release:
+	@./tools/release.sh
 
 clean:
-	rm -rf static
+	@git clean -d -f -x

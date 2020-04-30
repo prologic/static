@@ -1,10 +1,8 @@
 package main
 
 import (
-	"log"
 	"net/http"
 
-	// Logging
 	"github.com/unrolled/logger"
 
 	"github.com/NYTimes/gziphandler"
@@ -22,14 +20,12 @@ type Server struct {
 }
 
 // ListenAndServe ...
-func (s *Server) ListenAndServe() {
-	log.Fatal(
-		http.ListenAndServe(
-			s.bind,
-			s.logger.Handler(
-				gziphandler.GzipHandler(
-					s.router,
-				),
+func (s *Server) ListenAndServe() error {
+	return http.ListenAndServe(
+		s.bind,
+		s.logger.Handler(
+			gziphandler.GzipHandler(
+				s.router,
 			),
 		),
 	)
@@ -50,7 +46,6 @@ func NewServer(bind, root string) *Server {
 		logger: logger.New(logger.Options{
 			Prefix:               "static",
 			RemoteAddressHeaders: []string{"X-Forwarded-For"},
-			OutputFlags:          log.LstdFlags,
 		}),
 	}
 
